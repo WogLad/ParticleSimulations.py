@@ -39,9 +39,9 @@ last_placed_pixel_x_pos = 0
 # 		pixel_map[(g+88)][h] = 1
 
 # Spawns in a 25x25 block of water.
-for g in range(100):
-	for h in range(100):
-		pixel_map[(g+50)][h] = 2
+for g in range(25):
+	for h in range(25):
+		pixel_map[(g+88)][h] = 2
 
 while running:
 	mouse_pos = pygame.mouse.get_pos()
@@ -85,6 +85,16 @@ while running:
 					elif (x < (screen_width-1)) and (pixel_map[(x+1)][(y+1)] == 0): # Bottom Right
 						pixel_map[(x+1)][(y+1)] = 1
 						pixel_map[x][y] = 0
+					elif pixel_map[x][(y+1)] == 2: # Water Below
+						pixel_map[x][(y+1)] = 1
+						pixel_map[x][y] = 2
+					elif (x > 0) and (pixel_map[(x-1)][(y+1)] == 2): # Water Bottom Left
+						pixel_map[(x-1)][(y+1)] = 1
+						pixel_map[x][y] = 2
+					elif (x < (screen_width-1)) and (pixel_map[(x+1)][(y+1)] == 2): # Water Bottom Right
+						pixel_map[(x+1)][(y+1)] = 1
+						pixel_map[x][y] = 2
+
 				elif pixel_map[x][y] == 2:
 					if pixel_map[x][(y+1)] == 0: # Down
 						pixel_map[x][(y+1)] = 2
@@ -109,7 +119,7 @@ while running:
 			if pixel_map[x][y] == 1:
 				pygame.draw.rect(screen, pygame_colors["yellow"], pygame.Rect(x, y, 1, 1))
 			elif pixel_map[x][y] == 2:
-				pygame.draw.rect(screen, Color(0, 255, 255), pygame.Rect(x, y, 1, 1))
+				pygame.draw.rect(screen, Color(0, 0, 255), pygame.Rect(x, y, 1, 1))
 
 	# for pixel in sand_pixels:
 	# 	pygame.draw.rect(screen, pygame_colors["yellow"], pygame.Rect(pixel["x"], pixel["y"], 1, 1))
